@@ -1,0 +1,726 @@
+cd /mnt/j/261001healthcare/brainage_new
+
+cat > landing/index.html <<'HTML'
+<!doctype html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>NeuroCheck AI</title>
+
+<script src="config.js"></script>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, "Noto Sans KR", sans-serif;
+    background: #050816;
+    color: #f8fafc;
+}
+
+.page {
+    min-height: 100vh;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(99, 102, 241, 0.22),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 88% 20%,
+            rgba(14, 165, 233, 0.18),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 60% 90%,
+            rgba(16, 185, 129, 0.09),
+            transparent 30%
+        ),
+        #050816;
+}
+
+nav {
+    max-width: 1220px;
+    margin: auto;
+    padding: 25px 28px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.logo {
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #06b6d4
+        );
+
+    box-shadow:
+        0 0 28px rgba(99, 102, 241, 0.4);
+
+    font-size: 22px;
+}
+
+.nav-badge {
+    padding: 7px 12px;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    color: #cbd5e1;
+    font-size: 12px;
+}
+
+.hero {
+    max-width: 1220px;
+    min-height: 680px;
+
+    margin: auto;
+    padding: 90px 28px 80px;
+
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 70px;
+}
+
+.eyebrow {
+    display: inline-block;
+
+    margin-bottom: 20px;
+    padding: 8px 13px;
+
+    border: 1px solid rgba(56, 189, 248, 0.22);
+    border-radius: 999px;
+
+    color: #7dd3fc;
+    background: rgba(14, 165, 233, 0.08);
+
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+h1 {
+    max-width: 720px;
+    margin: 0;
+
+    font-size: clamp(46px, 6vw, 78px);
+    line-height: 1.04;
+    letter-spacing: -3px;
+}
+
+.gradient-text {
+    background:
+        linear-gradient(
+            90deg,
+            #818cf8,
+            #38bdf8,
+            #2dd4bf
+        );
+
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    max-width: 680px;
+
+    margin: 26px 0;
+
+    color: #94a3b8;
+
+    font-size: 19px;
+    line-height: 1.8;
+}
+
+.actions {
+    display: flex;
+    gap: 13px;
+    flex-wrap: wrap;
+
+    margin-top: 34px;
+}
+
+.primary-button {
+    cursor: pointer;
+
+    border: 0;
+
+    padding: 17px 28px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6366f1,
+            #0284c7
+        );
+
+    color: white;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    box-shadow:
+        0 15px 38px rgba(79, 70, 229, 0.28);
+
+    transition: 0.2s ease;
+}
+
+.primary-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 20px 45px rgba(79, 70, 229, 0.37);
+}
+
+.secondary-button {
+    cursor: pointer;
+
+    padding: 16px 23px;
+
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 14px;
+
+    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.04);
+
+    font-weight: 700;
+}
+
+.ai-panel {
+    position: relative;
+
+    padding: 27px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.08),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 40px 90px rgba(0, 0, 0, 0.40);
+}
+
+.brain {
+    width: 120px;
+    height: 120px;
+
+    margin: 10px auto 26px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 999px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(56, 189, 248, 0.18),
+            rgba(99, 102, 241, 0.08)
+        );
+
+    font-size: 64px;
+
+    box-shadow:
+        0 0 70px rgba(56, 189, 248, 0.13);
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+}
+
+.metric {
+    padding: 18px;
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+
+    background: rgba(15, 23, 42, 0.55);
+}
+
+.metric-label {
+    color: #64748b;
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
+.metric-value {
+    margin-top: 8px;
+
+    font-size: 24px;
+    font-weight: 850;
+}
+
+.live {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-top: 19px;
+
+    color: #94a3b8;
+
+    font-size: 12px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 999px;
+
+    background: #22c55e;
+
+    box-shadow: 0 0 13px #22c55e;
+}
+
+.features {
+    max-width: 1220px;
+
+    margin: 0 auto;
+    padding: 20px 28px 110px;
+}
+
+.section-label {
+    margin-bottom: 18px;
+
+    text-align: center;
+
+    color: #38bdf8;
+
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 2px;
+}
+
+.features h2 {
+    max-width: 760px;
+
+    margin: 0 auto 50px;
+
+    text-align: center;
+
+    font-size: 40px;
+    letter-spacing: -1.4px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.card {
+    min-height: 230px;
+
+    padding: 27px;
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 22px;
+
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.card-icon {
+    margin-bottom: 22px;
+
+    font-size: 31px;
+}
+
+.card h3 {
+    margin: 0 0 12px;
+
+    font-size: 20px;
+}
+
+.card p {
+    color: #94a3b8;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+footer {
+    padding: 30px 20px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+
+    color: #475569;
+
+    text-align: center;
+    font-size: 12px;
+}
+
+@media(max-width: 850px) {
+    .hero {
+        padding-top: 60px;
+
+        grid-template-columns: 1fr;
+
+        gap: 50px;
+    }
+
+    h1 {
+        letter-spacing: -2px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="page">
+
+<nav>
+
+<div class="brand">
+
+<div class="logo">
+🧠
+</div>
+
+<div>
+NeuroCheck AI
+</div>
+
+</div>
+
+<div class="nav-badge">
+RESEARCH DEMO · 2026
+</div>
+
+</nav>
+
+<section class="hero">
+
+<div>
+
+<div class="eyebrow">
+AI BRAIN HEALTH SCREENING
+</div>
+
+<h1>
+
+건강검진만으로<br>
+
+<span class="gradient-text">
+뇌 노화를 먼저 발견하다
+</span>
+
+</h1>
+
+<p>
+
+일반 건강검진과 생활습관 데이터로
+MRI-derived Brain Age Gap을 추정하고,
+가속 뇌노화 위험군을 선별하는
+AI 기반 뇌건강 스크리닝 플랫폼입니다.
+
+</p>
+
+<div class="actions">
+
+<button
+    class="primary-button"
+    onclick="openAI()"
+>
+AI 분석 시작 →
+</button>
+
+<button
+    class="secondary-button"
+    onclick="scrollFeatures()"
+>
+서비스 알아보기
+</button>
+
+</div>
+
+</div>
+
+<div class="ai-panel">
+
+<div class="brain">
+🧠
+</div>
+
+<div class="metric-grid">
+
+<div class="metric">
+
+<div class="metric-label">
+RISK SCORE
+</div>
+
+<div class="metric-value">
+90 / 100
+</div>
+
+</div>
+
+<div class="metric">
+
+<div class="metric-label">
+BRAIN AGE GAP
+</div>
+
+<div class="metric-value">
++2.49 Y
+</div>
+
+</div>
+
+<div class="metric">
+
+<div class="metric-label">
+REFERENCE AGE
+</div>
+
+<div class="metric-value">
+60.5 Y
+</div>
+
+</div>
+
+<div class="metric">
+
+<div class="metric-label">
+COHORT POSITION
+</div>
+
+<div class="metric-value">
+TOP 10%
+</div>
+
+</div>
+
+</div>
+
+<div class="live">
+
+<div class="dot"></div>
+
+AI model ready
+
+</div>
+
+</div>
+
+</section>
+
+<section
+    class="features"
+    id="features"
+>
+
+<div class="section-label">
+HOW IT WORKS
+</div>
+
+<h2>
+
+검진 데이터에서
+뇌건강 정밀평가가 필요한 사람을 먼저 찾습니다.
+
+</h2>
+
+<div class="cards">
+
+<div class="card">
+
+<div class="card-icon">
+🩺
+</div>
+
+<h3>
+일반 건강검진
+</h3>
+
+<p>
+
+연령, 신체계측, 혈압,
+혈당, 간기능, 지질검사와
+병력 및 생활습관 정보를 이용합니다.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon">
+⚡
+</div>
+
+<h3>
+AI 위험도 분석
+</h3>
+
+<p>
+
+XGBoost 기반 Brain Age Gap 추정과
+calibrated logistic risk model을 이용해
+가속 뇌노화 위험도를 분석합니다.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon">
+🧠
+</div>
+
+<h3>
+정밀검사 연계
+</h3>
+
+<p>
+
+상대적으로 높은 위험도를 보이는 경우
+환자의 임상 상태를 함께 고려해
+MRI 및 전문의 정밀평가로 연계할 수 있습니다.
+
+</p>
+
+</div>
+
+</div>
+
+<div
+    style="
+        text-align:center;
+        margin-top:50px;
+    "
+>
+
+<button
+    class="primary-button"
+    onclick="openAI()"
+>
+AI 뇌건강 분석 시작
+</button>
+
+</div>
+
+</section>
+
+<footer>
+
+Research demonstration only ·
+AI Brain Health Screening
+
+<br><br>
+
+본 서비스는 연구·시연용이며
+의학적 진단을 대체하지 않습니다.
+
+</footer>
+
+</div>
+
+<script>
+
+function openAI() {
+
+    const url =
+        window.BRAIN_APP_URL;
+
+    if (
+        !url ||
+        url.includes(
+            "YOUR-NGROK-URL"
+        )
+    ) {
+
+        alert(
+            "AI 서버 주소가 설정되지 않았습니다."
+        );
+
+        return;
+    }
+
+    window.location.href =
+        url;
+}
+
+
+function scrollFeatures() {
+
+    document
+        .getElementById(
+            "features"
+        )
+        .scrollIntoView(
+            {
+                behavior:
+                    "smooth"
+            }
+        );
+}
+
+</script>
+
+</body>
+
+</html>
+HTML
