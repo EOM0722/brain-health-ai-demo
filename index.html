@@ -1,723 +1,710 @@
 <!doctype html>
 <html lang="ko">
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>NeuroCheck AI</title>
+<title>NeuroCheck AI · 사과나무헬스케어</title>
+<meta name="description" content="건강검진으로 먼저 찾고 MRI로 확인하는 2단계 뇌 건강 평가 연구 시연">
 
 <script src="config.js"></script>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+
 <style>
-* {
-    box-sizing: border-box;
+:root {
+    --bg: #050816;
+    --ink: #F1F5F9;
+    --ink-2: #CBD5E1;
+    --muted: #94A3B8;
+    --label: #8B9BB4;
+    --line: rgba(255, 255, 255, 0.10);
+    --card: rgba(255, 255, 255, 0.04);
+    --indigo: #6366F1;
+    --sky: #38BDF8;
+    --teal: #2DD4BF;
+    --coral: #FB7185;
+    --amber: #FBBF24;
 }
 
-html {
-    scroll-behavior: smooth;
-}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
     margin: 0;
-    font-family: Arial, "Noto Sans KR", sans-serif;
-    background: #050816;
-    color: #f8fafc;
+    font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
 }
 
 .page {
     min-height: 100vh;
     overflow: hidden;
-
     background:
-        radial-gradient(
-            circle at 20% 10%,
-            rgba(99, 102, 241, 0.22),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 88% 20%,
-            rgba(14, 165, 233, 0.18),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 60% 90%,
-            rgba(16, 185, 129, 0.09),
-            transparent 30%
-        ),
-        #050816;
+        radial-gradient(circle at 18% 8%, rgba(99, 102, 241, 0.20), transparent 32%),
+        radial-gradient(circle at 88% 18%, rgba(14, 165, 233, 0.15), transparent 30%),
+        radial-gradient(circle at 55% 92%, rgba(16, 185, 129, 0.08), transparent 32%),
+        var(--bg);
 }
 
-nav {
-    max-width: 1220px;
-    margin: auto;
-    padding: 25px 28px;
+.wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 28px;
+}
 
+/* ---------- nav ---------- */
+nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 24px 0;
 }
 
 .brand {
     display: flex;
     align-items: center;
-    gap: 11px;
-
+    gap: 12px;
     font-size: 18px;
     font-weight: 800;
+    letter-spacing: -0.2px;
+}
+
+.brand small {
+    display: block;
+    margin-top: 2px;
+    color: var(--label);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0;
 }
 
 .logo {
     width: 42px;
     height: 42px;
-
     display: grid;
     place-items: center;
-
-    border-radius: 13px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #6366f1,
-            #06b6d4
-        );
-
-    box-shadow:
-        0 0 28px rgba(99, 102, 241, 0.4);
-
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--indigo), #06B6D4);
+    box-shadow: 0 0 26px rgba(99, 102, 241, 0.35);
     font-size: 22px;
 }
 
 .nav-badge {
-    padding: 7px 12px;
-
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 7px 14px;
+    border: 1px solid var(--line);
     border-radius: 999px;
-
-    background: rgba(255, 255, 255, 0.05);
-
-    color: #cbd5e1;
-    font-size: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--ink-2);
+    font-size: 13px;
+    font-weight: 500;
 }
 
+/* ---------- hero ---------- */
 .hero {
-    max-width: 1220px;
-    min-height: 680px;
-
-    margin: auto;
-    padding: 90px 28px 80px;
-
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
     align-items: center;
-    gap: 70px;
+    gap: 64px;
+    padding: 72px 0 64px;
 }
 
 .eyebrow {
     display: inline-block;
-
-    margin-bottom: 20px;
-    padding: 8px 13px;
-
-    border: 1px solid rgba(56, 189, 248, 0.22);
+    margin-bottom: 22px;
+    padding: 7px 13px;
+    border: 1px solid rgba(56, 189, 248, 0.25);
     border-radius: 999px;
-
-    color: #7dd3fc;
     background: rgba(14, 165, 233, 0.08);
-
+    color: #7DD3FC;
     font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
 }
 
 h1 {
-    max-width: 720px;
     margin: 0;
-
-    font-size: clamp(46px, 6vw, 78px);
-    line-height: 1.04;
-    letter-spacing: -3px;
+    font-size: clamp(40px, 5.2vw, 66px);
+    font-weight: 800;
+    line-height: 1.18;
+    letter-spacing: -1.6px;
+    text-wrap: balance;
 }
 
-.gradient-text {
-    background:
-        linear-gradient(
-            90deg,
-            #818cf8,
-            #38bdf8,
-            #2dd4bf
-        );
+h1 span { display: block; }
 
+.gradient-text {
+    background: linear-gradient(90deg, #818CF8, var(--sky), var(--teal));
     -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
 }
 
-.hero p {
-    max-width: 680px;
-
-    margin: 26px 0;
-
-    color: #94a3b8;
-
-    font-size: 19px;
-    line-height: 1.8;
+.lead {
+    max-width: 600px;
+    margin: 26px 0 0;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.75;
+    text-wrap: pretty;
 }
+
+.lead strong { color: var(--ink-2); font-weight: 600; }
 
 .actions {
     display: flex;
-    gap: 13px;
     flex-wrap: wrap;
-
+    gap: 12px;
     margin-top: 34px;
 }
 
-.primary-button {
-    cursor: pointer;
-
-    border: 0;
-
-    padding: 17px 28px;
-
+.primary-button,
+.secondary-button {
+    min-height: 52px;
+    padding: 0 26px;
     border-radius: 14px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #6366f1,
-            #0284c7
-        );
-
-    color: white;
-
+    font-family: inherit;
     font-size: 16px;
-    font-weight: 800;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
 
-    box-shadow:
-        0 15px 38px rgba(79, 70, 229, 0.28);
-
-    transition: 0.2s ease;
+.primary-button {
+    border: 0;
+    background: linear-gradient(90deg, var(--indigo), #0284C7);
+    color: #FFFFFF;
+    box-shadow: 0 14px 34px rgba(79, 70, 229, 0.28);
 }
 
 .primary-button:hover {
     transform: translateY(-2px);
-
-    box-shadow:
-        0 20px 45px rgba(79, 70, 229, 0.37);
+    box-shadow: 0 20px 44px rgba(79, 70, 229, 0.36);
 }
 
 .secondary-button {
-    cursor: pointer;
-
-    padding: 16px 23px;
-
-    border: 1px solid rgba(255, 255, 255, 0.13);
-    border-radius: 14px;
-
-    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.14);
     background: rgba(255, 255, 255, 0.04);
+    color: var(--ink-2);
+}
 
+.secondary-button:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* ---------- sample result panel ---------- */
+.ai-panel {
+    padding: 26px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 26px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+    backdrop-filter: blur(20px);
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.40);
+}
+
+.panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.panel-title {
+    font-size: 15px;
     font-weight: 700;
 }
 
-.ai-panel {
-    position: relative;
-
-    padding: 27px;
-
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 28px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255, 255, 255, 0.08),
-            rgba(255, 255, 255, 0.025)
-        );
-
-    backdrop-filter: blur(20px);
-
-    box-shadow:
-        0 40px 90px rgba(0, 0, 0, 0.40);
+.panel-sub {
+    margin-top: 3px;
+    color: var(--label);
+    font-size: 13px;
 }
 
-.brain {
-    width: 120px;
-    height: 120px;
-
-    margin: 10px auto 26px;
-
-    display: grid;
-    place-items: center;
-
-    border-radius: 999px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(56, 189, 248, 0.18),
-            rgba(99, 102, 241, 0.08)
-        );
-
-    font-size: 64px;
-
-    box-shadow:
-        0 0 70px rgba(56, 189, 248, 0.13);
+.tier {
+    flex: 0 0 auto;
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: rgba(251, 113, 133, 0.14);
+    border: 1px solid rgba(251, 113, 133, 0.35);
+    color: #FECDD3;
+    font-size: 15px;
+    font-weight: 800;
 }
 
 .metric-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
 }
 
 .metric {
-    padding: 18px;
-
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    padding: 16px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
-
     background: rgba(15, 23, 42, 0.55);
 }
 
 .metric-label {
-    color: #64748b;
-
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.8px;
+    color: var(--label);
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .metric-value {
     margin-top: 8px;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    font-variant-numeric: tabular-nums;
+}
 
-    font-size: 24px;
-    font-weight: 850;
+.metric-value small {
+    margin-left: 4px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+
+.metric-note {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.alert {
+    margin-top: 12px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(251, 191, 36, 0.30);
+    background: rgba(251, 191, 36, 0.08);
+    color: #FDE68A;
+    font-size: 14px;
+    line-height: 1.55;
 }
 
 .live {
     display: flex;
     align-items: center;
-    gap: 7px;
-
-    margin-top: 19px;
-
-    color: #94a3b8;
-
+    gap: 8px;
+    margin-top: 16px;
+    color: var(--muted);
     font-size: 12px;
 }
 
 .dot {
     width: 8px;
     height: 8px;
-
     border-radius: 999px;
-
-    background: #22c55e;
-
-    box-shadow: 0 0 13px #22c55e;
+    background: #22C55E;
+    box-shadow: 0 0 12px #22C55E;
 }
 
-.features {
-    max-width: 1220px;
-
-    margin: 0 auto;
-    padding: 20px 28px 110px;
+/* ---------- key numbers ---------- */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    margin: 8px 0 96px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--line);
 }
+
+.stat {
+    padding: 24px 22px;
+    background: #0A0F21;
+}
+
+.stat-value {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    font-variant-numeric: tabular-nums;
+}
+
+.stat-value small {
+    margin-left: 3px;
+    color: var(--muted);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0;
+}
+
+.stat-label {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+/* ---------- sections ---------- */
+.section { padding-bottom: 104px; }
 
 .section-label {
-    margin-bottom: 18px;
-
+    margin-bottom: 14px;
     text-align: center;
-
-    color: #38bdf8;
-
+    color: var(--sky);
     font-size: 12px;
-    font-weight: 850;
+    font-weight: 800;
     letter-spacing: 2px;
 }
 
-.features h2 {
+.section h2 {
     max-width: 760px;
-
-    margin: 0 auto 50px;
-
+    margin: 0 auto 16px;
     text-align: center;
+    font-size: clamp(28px, 3.4vw, 38px);
+    font-weight: 800;
+    line-height: 1.32;
+    letter-spacing: -1px;
+    text-wrap: balance;
+}
 
-    font-size: 40px;
-    letter-spacing: -1.4px;
+.section-lead {
+    max-width: 640px;
+    margin: 0 auto 48px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.7;
+    text-wrap: pretty;
 }
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 18px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
 }
 
 .card {
-    min-height: 230px;
-
-    padding: 27px;
-
+    padding: 26px 24px;
     border: 1px solid rgba(255, 255, 255, 0.09);
-    border-radius: 22px;
-
-    background: rgba(255, 255, 255, 0.035);
+    border-radius: 20px;
+    background: var(--card);
 }
 
-.card-icon {
-    margin-bottom: 22px;
+.card.alertcard { border-color: rgba(251, 191, 36, 0.28); }
+.card.refer { border-color: rgba(251, 113, 133, 0.28); }
 
-    font-size: 31px;
+.step {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 18px;
+    border-radius: 10px;
+    background: rgba(99, 102, 241, 0.16);
+    color: #C7D2FE;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.card .where {
+    margin-bottom: 6px;
+    color: var(--label);
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .card h3 {
-    margin: 0 0 12px;
-
-    font-size: 20px;
+    margin: 0 0 10px;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
 }
 
 .card p {
-    color: #94a3b8;
-
-    font-size: 14px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
     line-height: 1.7;
 }
 
-footer {
-    padding: 30px 20px;
-
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
-
-    color: #475569;
-
-    text-align: center;
-    font-size: 12px;
+.card .fact {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--ink-2);
+    font-size: 14px;
+    font-weight: 600;
 }
 
-@media(max-width: 850px) {
+.data-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.data-card {
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 20px;
+    background: var(--card);
+}
+
+.data-card .kind {
+    color: var(--teal);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.data-card h3 {
+    margin: 8px 0 10px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.data-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.cta {
+    margin-top: 52px;
+    text-align: center;
+}
+
+/* ---------- footer ---------- */
+footer {
+    padding: 34px 20px 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    color: var(--label);
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+footer strong { color: var(--ink-2); font-weight: 700; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1000px) {
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 860px) {
     .hero {
-        padding-top: 60px;
-
         grid-template-columns: 1fr;
-
-        gap: 50px;
+        gap: 44px;
+        padding-top: 44px;
     }
+    .lead { font-size: 16px; }
+    .data-grid { grid-template-columns: 1fr; }
+}
 
-    h1 {
-        letter-spacing: -2px;
-    }
-
-    .cards {
-        grid-template-columns: 1fr;
-    }
-
-    .hero p {
-        font-size: 16px;
-    }
+@media (max-width: 560px) {
+    .wrap { padding: 0 16px; }
+    .nav-badge { display: none; }
+    .cards, .stats { grid-template-columns: 1fr; }
+    .metric-value { font-size: 22px; }
+    h1 { letter-spacing: -1px; }
 }
 </style>
-
 </head>
 
 <body>
-
 <div class="page">
 
+<div class="wrap">
+
 <nav>
-
-<div class="brand">
-
-<div class="logo">
-🧠
-</div>
-
-<div>
-NeuroCheck AI
-</div>
-
-</div>
-
-<div class="nav-badge">
-RESEARCH DEMO · 2026
-</div>
-
+    <div class="brand">
+        <div class="logo" aria-hidden="true">🧠</div>
+        <div>
+            NeuroCheck AI
+            <small>사과나무헬스케어</small>
+        </div>
+    </div>
+    <div class="nav-badge">Healthcare AI Challenge 2026 · 연구 시연</div>
 </nav>
 
+<!-- ================= HERO ================= -->
 <section class="hero">
 
-<div>
+    <div>
+        <div class="eyebrow">TWO-STAGE BRAIN HEALTH SCREENING</div>
 
-<div class="eyebrow">
-AI BRAIN HEALTH SCREENING
-</div>
+        <h1>
+            <span>건강검진으로 먼저 찾고,</span>
+            <span class="gradient-text">MRI로 확인합니다</span>
+        </h1>
 
-<h1>
+        <p class="lead">
+            혈압·문진·혈액검사로 <strong>미진단 고혈압·당뇨</strong>와
+            <strong>뇌 노화 가속 위험군</strong>을 선별하고,
+            고위험군은 협력 기관의 MRI 뇌 나이 평가와 11년 후 예측으로 이어지는
+            2단계 뇌 건강 평가 플랫폼입니다.
+        </p>
 
-건강검진만으로<br>
+        <div class="actions">
+            <button type="button" class="primary-button" onclick="openAI()">AI 분석 시작 →</button>
+            <button type="button" class="secondary-button" onclick="scrollToId('how')">진행 과정 보기</button>
+        </div>
+    </div>
 
-<span class="gradient-text">
-뇌 노화를 먼저 발견하다
-</span>
+    <aside class="ai-panel" aria-label="예시 결과">
+        <div class="panel-head">
+            <div>
+                <div class="panel-title">1단계 선별 결과 예시</div>
+                <div class="panel-sub">시연 사례 · 58세 남성 · MRI 없이 검진값만 사용</div>
+            </div>
+            <div class="tier">고위험</div>
+        </div>
 
-</h1>
+        <div class="metric-grid">
+            <div class="metric">
+                <div class="metric-label">뇌 노화 가속군일 확률</div>
+                <div class="metric-value">49<small>%</small></div>
+                <div class="metric-note">전체 평균 20%</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">판정 구간</div>
+                <div class="metric-value">상위 10<small>%</small></div>
+                <div class="metric-note">MRI 의뢰 대상</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">비슷한 분들 중 가속군</div>
+                <div class="metric-value">50<small>/ 100명</small></div>
+                <div class="metric-note">기반조사 10,000명 기준</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">비슷한 분들 평균 뇌 나이</div>
+                <div class="metric-value">+3.7<small>년</small></div>
+                <div class="metric-note">개인값 아닌 집단 통계</div>
+            </div>
+        </div>
 
-<p>
+        <div class="alert">측정 기반 판정 · 고혈압 진단 있음, 혈압 조절 상태 점검 필요</div>
 
-일반 건강검진과 생활습관 데이터로
-MRI-derived Brain Age Gap을 추정하고,
-가속 뇌노화 위험군을 선별하는
-AI 기반 뇌건강 스크리닝 플랫폼입니다.
-
-</p>
-
-<div class="actions">
-
-<button
-    class="primary-button"
-    onclick="openAI()"
->
-AI 분석 시작 →
-</button>
-
-<button
-    class="secondary-button"
-    onclick="scrollFeatures()"
->
-서비스 알아보기
-</button>
-
-</div>
-
-</div>
-
-<div class="ai-panel">
-
-<div class="brain">
-🧠
-</div>
-
-<div class="metric-grid">
-
-<div class="metric">
-
-<div class="metric-label">
-RISK SCORE
-</div>
-
-<div class="metric-value">
-90 / 100
-</div>
-
-</div>
-
-<div class="metric">
-
-<div class="metric-label">
-BRAIN AGE GAP
-</div>
-
-<div class="metric-value">
-+2.49 Y
-</div>
-
-</div>
-
-<div class="metric">
-
-<div class="metric-label">
-REFERENCE AGE
-</div>
-
-<div class="metric-value">
-60.5 Y
-</div>
-
-</div>
-
-<div class="metric">
-
-<div class="metric-label">
-COHORT POSITION
-</div>
-
-<div class="metric-value">
-TOP 10%
-</div>
-
-</div>
-
-</div>
-
-<div class="live">
-
-<div class="dot"></div>
-
-AI model ready
-
-</div>
-
-</div>
+        <div class="live"><div class="dot" aria-hidden="true"></div>AI model ready</div>
+    </aside>
 
 </section>
 
-<section
-    class="features"
-    id="features"
->
-
-<div class="section-label">
-HOW IT WORKS
-</div>
-
-<h2>
-
-검진 데이터에서
-뇌건강 정밀평가가 필요한 사람을 먼저 찾습니다.
-
-</h2>
-
-<div class="cards">
-
-<div class="card">
-
-<div class="card-icon">
-🩺
-</div>
-
-<h3>
-일반 건강검진
-</h3>
-
-<p>
-
-연령, 신체계측, 혈압,
-혈당, 간기능, 지질검사와
-병력 및 생활습관 정보를 이용합니다.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<div class="card-icon">
-⚡
-</div>
-
-<h3>
-AI 위험도 분석
-</h3>
-
-<p>
-
-XGBoost 기반 Brain Age Gap 추정과
-calibrated logistic risk model을 이용해
-가속 뇌노화 위험도를 분석합니다.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<div class="card-icon">
-🧠
-</div>
-
-<h3>
-정밀검사 연계
-</h3>
-
-<p>
-
-상대적으로 높은 위험도를 보이는 경우
-환자의 임상 상태를 함께 고려해
-MRI 및 전문의 정밀평가로 연계할 수 있습니다.
-
-</p>
-
-</div>
-
-</div>
-
-<div
-    style="
-        text-align:center;
-        margin-top:50px;
-    "
->
-
-<button
-    class="primary-button"
-    onclick="openAI()"
->
-AI 뇌건강 분석 시작
-</button>
-
-</div>
-
+<!-- ================= KEY NUMBERS ================= -->
+<section class="stats" aria-label="핵심 수치">
+    <div class="stat">
+        <div class="stat-value">118<small>명</small></div>
+        <div class="stat-label">검진 1,000명당 찾아내는<br>미진단 고혈압 의심자</div>
+    </div>
+    <div class="stat">
+        <div class="stat-value">2.5<small>배</small></div>
+        <div class="stat-label">고위험 판정의 가속군 적중<br>(무작위 선별 대비)</div>
+    </div>
+    <div class="stat">
+        <div class="stat-value">2.84<small>년</small></div>
+        <div class="stat-label">MRI 뇌 나이 오차<br>(독립 코호트 외부검증)</div>
+    </div>
+    <div class="stat">
+        <div class="stat-value">0.67</div>
+        <div class="stat-label">11년 후 뇌 노화 예측 R²<br>(반복 교차검증)</div>
+    </div>
 </section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="section" id="how">
+    <div class="section-label">HOW IT WORKS</div>
+    <h2>MRI가 없는 곳에서 거르고,<br>MRI가 있는 곳에서 확인합니다</h2>
+    <p class="section-lead">
+        모든 검진자가 MRI를 찍을 필요는 없습니다.
+        검진 단계에서 치료가 필요한 사람과 정밀 평가가 필요한 사람을 먼저 가려냅니다.
+    </p>
+
+    <div class="cards">
+        <div class="card">
+            <div class="step">01</div>
+            <div class="where">사과나무 · 내과·치과 검진</div>
+            <h3>검진</h3>
+            <p>혈압 측정과 고혈압·당뇨 문진은 필수, 혈액검사는 권장 항목입니다.</p>
+            <div class="fact">혈압 측정은 1분이면 충분합니다</div>
+        </div>
+
+        <div class="card alertcard">
+            <div class="step">02</div>
+            <div class="where">사과나무</div>
+            <h3>측정 기반 진단 판정</h3>
+            <p>진단 이력이 없는데 측정값이 기준을 넘으면, 뇌 노화 결과와 관계없이 바로 내과로 연결합니다.</p>
+            <div class="fact">1,000명당 고혈압 118명 · 당뇨 27명</div>
+        </div>
+
+        <div class="card">
+            <div class="step">03</div>
+            <div class="where">사과나무 · MRI 없음</div>
+            <h3>1단계 선별</h3>
+            <p>검진값으로 뇌 노화 가속군일 확률을 계산해 낮음·주의·고위험으로 나눕니다.</p>
+            <div class="fact">AUROC 0.68 · 고위험 적중 50%</div>
+        </div>
+
+        <div class="card refer">
+            <div class="step">04</div>
+            <div class="where">협력 기관 · 신경과·뇌건강센터</div>
+            <h3>MRI 정밀 평가</h3>
+            <p>고위험군은 의뢰서와 함께 MRI로 뇌 나이, 부위별 상태, 11년 후 변화를 확인하고 결과를 회신합니다.</p>
+            <div class="fact">외부검증 MAE 2.84년</div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= DATA ================= -->
+<section class="section" id="data">
+    <div class="section-label">EVIDENCE</div>
+    <h2>세 가지 공공 코호트 데이터가<br>각자 역할을 맡습니다</h2>
+    <p class="section-lead">
+        국립보건연구원 합성 코호트(기반조사 10,000명, 추적 1,000명, 4차추적 698명)로 학습하고 검증했습니다.
+    </p>
+
+    <div class="data-grid">
+        <div class="data-card">
+            <div class="kind">임상역학 · KoGES</div>
+            <h3>선별과 진단 판정</h3>
+            <p>혈압·문진·혈액검사로 1단계 선별 모델을 학습하고, 미진단 고혈압·당뇨를 찾습니다.</p>
+        </div>
+        <div class="data-card">
+            <div class="kind">뇌 MRI 체적 · 66개 부위</div>
+            <h3>뇌 나이와 부위별 지도</h3>
+            <p>건강군 6,349명의 나이별 정상 곡선으로 해마·측두엽 등 부위별 상태와 11년 후 변화를 보여줍니다.</p>
+        </div>
+        <div class="data-card">
+            <div class="kind">유전체 · K-CHIP</div>
+            <h3>인과 근거</h3>
+            <p>혈압 관련 유전 점수를 도구변수로 쓴 멘델 무작위화에서 고혈압은 뇌 노화를 3.7년 앞당기는 것으로 추정되었습니다.</p>
+        </div>
+    </div>
+
+    <div class="cta">
+        <button type="button" class="primary-button" onclick="openAI()">AI 뇌 건강 분석 시작</button>
+    </div>
+</section>
+
+</div>
 
 <footer>
-
-Research demonstration only ·
-AI Brain Health Screening
-
-<br><br>
-
-본 서비스는 연구·시연용이며
-의학적 진단을 대체하지 않습니다.
-
+    <strong>사과나무헬스케어</strong> · 의료법인 사과나무의료재단<br>
+    국립보건연구원·한국생명정보학회 공동주관 Healthcare AI Challenge 2026 출품작<br>
+    본 서비스는 연구·시연용이며 치매를 진단하거나 의학적 진단을 대체하지 않습니다.
 </footer>
 
 </div>
 
 <script>
-
 function openAI() {
-
-    const url =
-        window.BRAIN_APP_URL;
-
-    if (
-        !url ||
-        url.includes(
-            "YOUR-NGROK-URL"
-        )
-    ) {
-
-        alert(
-            "AI 서버 주소가 설정되지 않았습니다."
-        );
-
+    const url = window.BRAIN_APP_URL;
+    if (!url || url.includes("YOUR-NGROK-URL")) {
+        alert("AI 서버 주소가 설정되지 않았습니다.");
         return;
     }
-
-    window.location.href =
-        url;
+    window.location.href = url;
 }
 
-
-function scrollFeatures() {
-
-    document
-        .getElementById(
-            "features"
-        )
-        .scrollIntoView(
-            {
-                behavior:
-                    "smooth"
-            }
-        );
+function scrollToId(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
 }
-
 </script>
 
 </body>
-
 </html>
-HTML
